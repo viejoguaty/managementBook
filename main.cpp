@@ -104,7 +104,7 @@ void addBook(vector<Book>& library) {
 
 
 int main() {
-    int inputOptionInit;
+    // Initialize library with some books
     vector< Book > library = {
         Book("Harry Potter", "J.K. Rowling", "12345", true, "2024-01-10"),
         Book("Don Quixote", "Miguel de Cervantes Saavedra", "53456", true, "2024-02-15"),
@@ -113,8 +113,12 @@ int main() {
         Book("A Tale of Two Cities", "Charles Dickens", "56789", true, "2024-05-30")
     };
 
+   // User input for option
+    int inputOptionInit;
+    int getArrayLength = library.size();
+
       while (true) {
-        int getArrayLength = library.size();
+        // Display menu
         cout << "\n\n";
         cout << "Welcome to Library Management System\n";
         cout << "What do you want to do?\n";
@@ -126,7 +130,7 @@ int main() {
         if (inputOptionInit == 1) {
             addBook(library);
         } else if (inputOptionInit == 2) {
-          bool found = false;
+          bool foundBook = false; // Flag to check if the book is found
           string inputISBN;
 
           // User input for ISBN
@@ -140,7 +144,7 @@ int main() {
           // Search for the book in the sorted array
           for (int i = 0; i < getArrayLength; ++i) {
               if (library[i].getISBN() == inputISBN) {
-                  found = true;
+                    foundBook = true;
                   library[i].displayBookDetails();
                   library[i].borrowBook();
                   break;
@@ -148,7 +152,7 @@ int main() {
           }
           
           // If the book is not found
-          if (!found) {
+          if (!foundBook) {
               cout << "Error 404: Book not found.\n";
           }
           

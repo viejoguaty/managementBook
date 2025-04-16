@@ -104,6 +104,7 @@ void addBook(vector<Book>& library) {
 
 
 int main() {
+    int inputOptionInit;
     // Initialize library with some books
     vector< Book > library = {
         Book("Harry Potter", "J.K. Rowling", "12345", true, "2024-01-10"),
@@ -113,24 +114,21 @@ int main() {
         Book("A Tale of Two Cities", "Charles Dickens", "56789", true, "2024-05-30")
     };
 
-   // User input for option
-    int inputOptionInit;
-    int getArrayLength = library.size();
-
       while (true) {
-        // Display menu
+        int getArrayLength = library.size();
         cout << "\n\n";
         cout << "Welcome to Library Management System\n";
         cout << "What do you want to do?\n";
         cout << "1. Add a book\n";
         cout << "2. Borrow a Book\n";
-        cout << "3. Diplay all Books\n";
+        cout << "3. Return a Book\n";
+        cout << "4. Diplay all Books\n";
         cin >> inputOptionInit;
 
         if (inputOptionInit == 1) {
             addBook(library);
         } else if (inputOptionInit == 2) {
-          bool foundBook = false; // Flag to check if the book is found
+          bool found = false;
           string inputISBN;
 
           // User input for ISBN
@@ -144,7 +142,7 @@ int main() {
           // Search for the book in the sorted array
           for (int i = 0; i < getArrayLength; ++i) {
               if (library[i].getISBN() == inputISBN) {
-                    foundBook = true;
+                  found = true;
                   library[i].displayBookDetails();
                   library[i].borrowBook();
                   break;
@@ -152,11 +150,35 @@ int main() {
           }
           
           // If the book is not found
-          if (!foundBook) {
+          if (!found) {
               cout << "Error 404: Book not found.\n";
           }
           
-        } else if (inputOptionInit == 3) {
+        } else if(inputOptionInit == 3) {
+            bool found = false;
+              string inputISBN;
+
+              // User input for ISBN
+              cout << "Enter ISBN to return (0 to exit): ";
+              cin >> inputISBN;
+
+
+              // Exit condition if user inputs "0"
+              if (inputISBN == "0") break;
+            
+            for (int i = 0; i < getArrayLength; ++i) {
+                  if (library[i].getISBN() == inputISBN) {
+                      found = true;
+                      library[i].returnBook();
+                      break;
+                  }
+              }
+            // If the book is not found
+              if (!found) {
+                  cout << "Error 404: Book not found.\n";
+              }
+            
+        } else if (inputOptionInit == 4) {
           // Sort and display all books
           Book::sortBookData(library, getArrayLength);
           for (int i = 0; i < getArrayLength; ++i) {
